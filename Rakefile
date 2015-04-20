@@ -5,6 +5,14 @@ require 'rdoc/task'
 desc "Default Task"
 task :default => [ :test ]
 
+namespace :ci do
+  task :build do
+    puts "Creating tests/output directory..."
+    FileUtils.mkdir_p "tests/output"
+    Rake::Task[:test].invoke
+  end
+end
+
 # Run the unit tests
 desc "Run all unit tests"
 Rake::TestTask.new("test") { |t|
